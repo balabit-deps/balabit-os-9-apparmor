@@ -21,6 +21,17 @@ override_dh_auto_configure:
 
 
 override_dh_auto_build:
+	# Create the empty file that was meant to be created by
+	# ubuntu/add-mqueue-support.patch.
+	# Quilt does not support creating new empty files.
+	touch libraries/libapparmor/testsuite/test_multi/testcase_mqueue_01.err
+	touch libraries/libapparmor/testsuite/test_multi/testcase_mqueue_02.err
+	touch libraries/libapparmor/testsuite/test_multi/testcase_mqueue_03.err
+	touch libraries/libapparmor/testsuite/test_multi/testcase_mqueue_04.err
+	touch libraries/libapparmor/testsuite/test_multi/testcase_mqueue_05.err
+	touch libraries/libapparmor/testsuite/test_multi/testcase_mqueue_06.err
+	touch libraries/libapparmor/testsuite/test_multi/testcase_mqueue_07.err
+	touch libraries/libapparmor/testsuite/test_multi/testcase_mqueue_08.err
 	# Replace #VERSION# placeholder in dh_apparmor
 	sed -i --regexp-extended \
 	    -e "s,^#VERSION#,our \$$VERSION = \"$(DEB_VERSION)\";," \

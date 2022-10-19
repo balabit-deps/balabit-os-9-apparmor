@@ -1,3 +1,33 @@
+apparmor (3.0.4-2ubuntu2.2) jammy; urgency=medium
+
+  * Add mqueue patches. LP: #1993353
+    - u/mqueue1-parser-add-parser-support-for-message-queue-mediatio.patch:
+    add parser support for mqueue mediation
+    - u/mqueue2-tests-add-posix-message-queue-regression-tests.patch: add
+    posix mqueue regression tests
+    - u/mqueue3-utils-add-message-queue-rules-parsing-in-python-tool.patch:
+    add support in python tools to parse mqueue rules
+    - u/mqueue4-parser-add-parser-simple-tests-for-mqueue-rules.patch: add
+    parser simple tests for mqueue
+    - u/mqueue5-parser-Add-a-set-of-debug-flags-that-can-be-passed-t.patch:
+    add debug flags that can be passed to the kernel
+    - u/mqueue6-parser-Set-the-DEBUG1-flag-on-profiles-that-use-mque.patch:
+    set DEBUG1 on mqueue rules
+    - u/mqueue7-parser-place-perm-on-name-as-well-as-name-label-comb.patch:
+    add permissions on name and also on name + label
+    - u/mqueue8-libapparmor-add-support-for-requested-and-denied-on-.patch:
+    add parsing support for "denied" and "requested" from audit logs
+    - u/mqueue9-libapparmor-add-support-for-class-in-logparsing.patch: add
+    parsing support for "class" from audit logs
+    - u/mqueue10-utils-add-logparser-support-for-mqueue.patch: add logparser
+    support for mqueue rules
+    - u/mqueue11-tests-add-sysv-message-queue-regression-tests.patch: add
+    sysv mqueue regression tests
+    - debian/rules: create mqueue testcase empty files for libapparmor tests.
+  * Closes LP: #1994146
+
+ -- Georgia Garcia <georgia.garcia@canonical.com>  Wed, 19 Oct 2022 11:52:00 -0300
+
 apparmor (3.0.4-2ubuntu2.1) jammy; urgency=medium
 
   * Add upstream commit to remove dbus deny rule from exo-open abstraction
