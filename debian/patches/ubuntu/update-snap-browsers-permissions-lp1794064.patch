@@ -1,0 +1,82 @@
+From a5586f45fbc1f0944b5040e79adf6f453a03f1ff Mon Sep 17 00:00:00 2001
+From: John Johansen <john@jjmx.net>
+Date: Tue, 19 Apr 2022 18:35:52 +0000
+Subject: [PATCH] Merge profiles: update snap_browsers permissions
+
+The snap_browsers abstraction requires more permissions
+due to updates on snaps.
+
+Some of the permissions are not required in older versions of
+Ubuntu that use 2.12 and 2.13, but are introduced for unification
+and ease of maintenance purposes. These include:
+```
+    all dbus permissions,
+    @{PROC}/sys/kernel/random/uuid r,
+    owner @{PROC}/@{pid}/cgroup r,
+    /var/lib/snapd/sequence/{chromium,firefox,opera}.json r,
+```
+
+I also propose a cherry-pick of this commit to 2.12, 2.13 and 3.0
+
+MR: https://gitlab.com/apparmor/apparmor/-/merge_requests/877
+Approved-by: John Johansen <john@jjmx.net>
+Merged-by: John Johansen <john@jjmx.net>
+(cherry picked from commit bfa67b369df97ec86b532fd686c8240ecbbd9f06)
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+---
+ profiles/apparmor.d/abstractions/snap_browsers | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/profiles/apparmor.d/abstractions/snap_browsers b/profiles/apparmor.d/abstractions/snap_browsers
+index 34b07dc2b..06ca911a0 100644
+--- a/profiles/apparmor.d/abstractions/snap_browsers
++++ b/profiles/apparmor.d/abstractions/snap_browsers
+@@ -1,6 +1,7 @@
+ profile snap_browsers {
+   include if exists <abstractions/snap_browsers.d>
+   include <abstractions/base>
++  include <abstractions/dbus-session-strict>
+ 
+   /etc/passwd r,
+   /etc/nsswitch.conf r,
+@@ -8,7 +9,6 @@ profile snap_browsers {
+ 
+   # noisy
+   deny owner /run/user/[0-9]*/gdm/Xauthority r, # not needed on Ubuntu
+-  deny /run/snapd.socket rw,
+ 
+   /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/bin/snap mrix, # re-exec
+   /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/lib/snapd/info r,
+@@ -16,14 +16,19 @@ profile snap_browsers {
+   /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/lib/snapd/snap-seccomp rPix,
+   /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/lib/snapd/snap-confine Pix,
+   /var/lib/snapd/system-key r,
++  /run/snapd.socket rw,
+ 
+   @{PROC}/version r,
+   @{PROC}/cmdline r,
+   @{PROC}/sys/net/core/somaxconn r,
+   @{PROC}/sys/kernel/seccomp/actions_avail r,
++  @{PROC}/sys/kernel/random/uuid r,
++  owner @{PROC}/@{pid}/cgroup r,
+   owner @{PROC}/@{pid}/mountinfo r,
+   owner @{HOME}/.snap/auth.json r, # if exists, required
+-  owner /run/user/[0-9]*/bus rw,
++
++  dbus send bus="session" path="/org/freedesktop/systemd1" interface="org.freedesktop.systemd1.Manager" member="StartTransientUnit" peer=(name="org.freedesktop.systemd1"),
++  dbus receive bus="session" path="/org/freedesktop/systemd1" interface="org.freedesktop.systemd1.Manager" member="JobRemoved",
+ 
+   /sys/kernel/security/apparmor/features/ r,
+ 
+@@ -31,5 +36,8 @@ profile snap_browsers {
+   /snap/chromium/[0-9]*/meta/{snap.yaml,hooks/} r,
+   /snap/firefox/[0-9]*/meta/{snap.yaml,hooks/} r,
+   /snap/opera/[0-9]*/meta/{snap.yaml,hooks/} r,
++
++  /var/lib/snapd/sequence/{chromium,firefox,opera}.json r,
++  /var/lib/snapd/inhibit/{chromium,firefox,opera}.lock rk,
+   # add other browsers here
+ }
+-- 
+2.34.1
+

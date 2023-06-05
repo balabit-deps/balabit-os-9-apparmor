@@ -28,3 +28,5 @@ ubuntu/mqueue8-libapparmor-add-support-for-requested-and-denied-on-.patch
 ubuntu/mqueue9-libapparmor-add-support-for-class-in-logparsing.patch
 ubuntu/mqueue10-utils-add-logparser-support-for-mqueue.patch
 ubuntu/mqueue11-tests-add-sysv-message-queue-regression-tests.patch
+ubuntu/add-snap-browsers-profile-lp1794064.patch
+ubuntu/update-snap-browsers-permissions-lp1794064.patch

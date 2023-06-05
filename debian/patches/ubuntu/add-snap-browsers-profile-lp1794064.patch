@@ -1,0 +1,71 @@
+From dceba9763adf6543017ef2f0a403ef646551405f Mon Sep 17 00:00:00 2001
+From: Georgia Garcia <georgia.garcia@canonical.com>
+Date: Fri, 15 Oct 2021 11:28:26 -0300
+Subject: [PATCH] add snap-browsers profile
+
+Whenever the evince deb package tries to open a snap browser which was
+selected as the default, we get the following denial:
+
+audit[2110]: AVC apparmor="DENIED" operation="exec" profile="/usr/bin/evince" name="/usr/bin/snap" pid=2110 comm="env" requested_mask="x" denied_mask="x" fsuid=1000 ouid=0
+
+As a short-term solution, we are adding a snap-browsers profile
+which restricts what snaps opened by evince can do.
+The long-term solution is currently not available, but could be
+accomplished by using enhanced environment variable filtering/mediation
+and delegation of open fds.
+
+Bug: https://launchpad.net/bugs/1794064
+
+Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
+(cherry picked from commit fb3283f37ebeb2a97de1846214021af1adf2260b)
+MR: https://gitlab.com/apparmor/apparmor/-/merge_requests/863
+Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
+---
+ .../apparmor.d/abstractions/snap_browsers     | 35 +++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+ create mode 100644 profiles/apparmor.d/abstractions/snap_browsers
+
+diff --git a/profiles/apparmor.d/abstractions/snap_browsers b/profiles/apparmor.d/abstractions/snap_browsers
+new file mode 100644
+index 000000000..34b07dc2b
+--- /dev/null
++++ b/profiles/apparmor.d/abstractions/snap_browsers
+@@ -0,0 +1,35 @@
++profile snap_browsers {
++  include if exists <abstractions/snap_browsers.d>
++  include <abstractions/base>
++
++  /etc/passwd r,
++  /etc/nsswitch.conf r,
++  /etc/fstab r,
++
++  # noisy
++  deny owner /run/user/[0-9]*/gdm/Xauthority r, # not needed on Ubuntu
++  deny /run/snapd.socket rw,
++
++  /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/bin/snap mrix, # re-exec
++  /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/lib/snapd/info r,
++  /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/lib/snapd/snapd r,
++  /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/lib/snapd/snap-seccomp rPix,
++  /{,snap/core/[0-9]*/,snap/snapd/[0-9]*/}usr/lib/snapd/snap-confine Pix,
++  /var/lib/snapd/system-key r,
++
++  @{PROC}/version r,
++  @{PROC}/cmdline r,
++  @{PROC}/sys/net/core/somaxconn r,
++  @{PROC}/sys/kernel/seccomp/actions_avail r,
++  owner @{PROC}/@{pid}/mountinfo r,
++  owner @{HOME}/.snap/auth.json r, # if exists, required
++  owner /run/user/[0-9]*/bus rw,
++
++  /sys/kernel/security/apparmor/features/ r,
++
++  # allow launching official browser snaps.
++  /snap/chromium/[0-9]*/meta/{snap.yaml,hooks/} r,
++  /snap/firefox/[0-9]*/meta/{snap.yaml,hooks/} r,
++  /snap/opera/[0-9]*/meta/{snap.yaml,hooks/} r,
++  # add other browsers here
++}
+-- 
+2.34.1
+

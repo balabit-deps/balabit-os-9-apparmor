@@ -1,3 +1,15 @@
+apparmor (3.0.4-2ubuntu2.3) jammy; urgency=medium
+
+  * Add support for applications like evince opening browsers
+    distributed as snaps (LP: #1794064)
+    - d/p/u/add-snap-browsers-profile-lp1794064.patch: add
+      a snap-browsers abstraction profile to let applications like
+      evince spawn browsers distributed as snaps
+    - d/p/u/update-snap-browsers-permissions-lp1794064.patch: update
+      snap-browsers abstraction with missing permissions
+
+ -- Georgia Garcia <georgia.garcia@canonical.com>  Mon, 05 Jun 2023 15:58:43 -0300
+
 apparmor (3.0.4-2ubuntu2.2) jammy; urgency=medium
 
   * Add mqueue patches. LP: #1993353
