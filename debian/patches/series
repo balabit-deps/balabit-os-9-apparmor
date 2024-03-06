@@ -30,3 +30,12 @@ ubuntu/mqueue10-utils-add-logparser-support-for-mqueue.patch
 ubuntu/mqueue11-tests-add-sysv-message-queue-regression-tests.patch
 ubuntu/add-snap-browsers-profile-lp1794064.patch
 ubuntu/update-snap-browsers-permissions-lp1794064.patch
+CVE-2016-1585/Merge-Fix-mount-rules-encoding.patch
+CVE-2016-1585/Support-rule-qualifiers-in-regression-tests.patch
+CVE-2016-1585/Merge-expand-mount-tests.patch
+CVE-2016-1585/Check-for-newer-mount-options-in-regression-test.patch
+CVE-2016-1585/Merge-Issue-312-added-missing-kernel-mount-options.patch
+CVE-2016-1585/Merge-extend-test-profiles-for-mount.patch
+CVE-2016-1585/Merge-parser-fix-parsing-of-source-as-mount-point-fo.patch
+CVE-2016-1585/parser-Deprecation-warning-should-not-have-been-back.patch
+CVE-2016-1585/parser-fix-rule-flag-generation-change_mount-type-ru.patch

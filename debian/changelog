@@ -1,9 +1,41 @@
-apparmor (3.0.4-2ubuntu2.3build2) jammy-security; urgency=medium
+apparmor (3.0.4-2ubuntu2.4) jammy-security; urgency=medium
 
-  * No-change re-build upload for the jammy-security pocket as part
-    of the preparation for addressing CVE-2016-1585 (LP: #1597017)
+  * SECURITY UPDATE: Excessive permissions with mount rules (LP: #1597017)
+    - d/p/CVE-2016-1585/Merge-Fix-mount-rules-encoding.patch: fix mount
+      rules encoding in parser/mount.cc, parser/mount.h, parser/parser.h
+      and fix multiple test cases in parser/tst/simple_tests/mount/*.
+    - d/p/CVE-2016-1585/Support-rule-qualifiers-in-regression-tests.patch:
+      update rule qualifiers in regression tests in
+      tests/regression/apparmor/mkprofile.pl and
+      tests/regression/apparmor/capabilities.sh.
+    - d/p/CVE-2016-1585/Merge-expand-mount-tests.patch: expand mount
+      regression tests in tests/regression/apparmor/mount.c,
+      tests/regression/apparmor/mount.sh and
+      tests/regression/apparmor/mkprofile.pl.
+    - d/p/CVE-2016-1585/Check-for-newer-mount-options-in-regression-test.patch:
+      add check for newer mount options in regression tests in
+      tests/regression/apparmor/Makefile, tests/regression/apparmor/mount.c
+      and tests/regression/apparmor/mount.sh.
+    - d/p/CVE-2016-1585/Merge-Issue-312-added-missing-kernel-mount-options.patch:
+      add missing kernel mount options flag in parser/apparmor.d.pod,
+      parser/mount.cc, parser/mount.h, tests/regression/apparmor/mount.sh
+      and parser/tst/simple_tests/mount/*.
+    - d/p/CVE-2016-1585/Merge-extend-test-profiles-for-mount.patch: update
+      test profiles in parser/tst/simple_tests/mount/*.
+    - d/p/CVE-2016-1585/Merge-parser-fix-parsing-of-source-as-mount-point-fo.patch:
+      update gen_policy_change_mount_type() in parser/mount.cc and also
+      updated tests on parser/tst/simple_tests/mount/* and
+      tests/regression/apparmor/mount.sh.
+    - d/p/CVE-2016-1585/parser-Deprecation-warning-should-not-have-been-back.patch:
+      remove deprecation warning message in parser/mount.cc.
+    - d/p/CVE-2016-1585/parser-fix-rule-flag-generation-change_mount-type-ru.patch:
+      add device checks in gen_flag_rules() in parser/mount.cc and tests
+      in parser/tst/simple_tests/mount/*, parser/tst/equality.sh,
+      tests/regression/apparmor/mount.sh and
+      utils/test/test-parser-simple-tests.py.
+    - CVE-2016-1585
 
- -- Steve Beattie <steve.beattie@canonical.com>  Tue, 27 Aug 2024 14:48:42 -0700
+ -- Rodrigo Figueiredo Zaiden <rodrigo.zaiden@canonical.com>  Tue, 06 Mar 2024 15:35:00 -0300
 
 apparmor (3.0.4-2ubuntu2.3) jammy; urgency=medium
 
