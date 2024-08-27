@@ -1,3 +1,10 @@
+apparmor (3.0.4-2ubuntu2.3build2) jammy-security; urgency=medium
+
+  * No-change re-build upload for the jammy-security pocket as part
+    of the preparation for addressing CVE-2016-1585 (LP: #1597017)
+
+ -- Steve Beattie <steve.beattie@canonical.com>  Tue, 27 Aug 2024 14:48:42 -0700
+
 apparmor (3.0.4-2ubuntu2.3) jammy; urgency=medium
 
   * Add support for applications like evince opening browsers
