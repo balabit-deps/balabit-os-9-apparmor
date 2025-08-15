@@ -1,3 +1,9 @@
+apparmor (3.0.4-2ubuntu2.5) jammy; urgency=medium
+
+  * profiles: make /sys/devices PCI paths hex-aware (LP: #2115234)
+
+ -- Keifer Snedeker <keifer.snedeker@canonical.com>  Fri, 15 Aug 2025 13:17:13 +0100
+
 apparmor (3.0.4-2ubuntu2.4) jammy-security; urgency=medium
 
   * SECURITY UPDATE: Excessive permissions with mount rules (LP: #1597017)

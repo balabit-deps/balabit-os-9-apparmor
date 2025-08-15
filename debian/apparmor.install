@@ -22,6 +22,7 @@ etc/apparmor.d/tunables/run
 etc/apparmor.d/tunables/securityfs
 etc/apparmor.d/tunables/share
 etc/apparmor.d/tunables/sys
+etc/apparmor.d/tunables/system
 etc/apparmor.d/tunables/xdg-user-dirs
 etc/apparmor.d/tunables/xdg-user-dirs.d
 etc/apparmor/parser.conf

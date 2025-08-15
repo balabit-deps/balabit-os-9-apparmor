@@ -39,3 +39,4 @@ CVE-2016-1585/Merge-extend-test-profiles-for-mount.patch
 CVE-2016-1585/Merge-parser-fix-parsing-of-source-as-mount-point-fo.patch
 CVE-2016-1585/parser-Deprecation-warning-should-not-have-been-back.patch
 CVE-2016-1585/parser-fix-rule-flag-generation-change_mount-type-ru.patch
+ubuntu/profiles-pci-hex-mr-1725.patch
